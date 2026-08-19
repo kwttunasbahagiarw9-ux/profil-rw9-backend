@@ -35,6 +35,14 @@ const DEFAULT_DATA = {
       email: "kelurahantanjungmas@gmail.com",
       hours: "Senin – Jumat, 08.00 – 15.00 WIB"
     },
+    footer: {
+      address:
+        "RW 09, Kelurahan Tanjung Mas, Kecamatan Semarang Utara, Kota Semarang, Jawa Tengah 50144",
+      phone: "(024) 3560341",
+      waNumber: "6285241178085",
+      whatsappLabel: "WA: 0852-4117-8085",
+      email: "kelurahantanjungmas@gmail.com"
+    },
     socials: [
       { name: "facebook", label: "Facebook", url: "#kontak" },
       { name: "instagram", label: "Instagram", url: "#kontak" },

@@ -11,7 +11,23 @@ const { router: adminRoutes, uploadDir } = require("./routes/adminRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+const clientUrls = (process.env.CLIENT_URL || "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, cb) => {
+      const isLocal = origin && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+      if (!origin || clientUrls.length === 0 || clientUrls.includes(origin) || isLocal) {
+        cb(null, true);
+      } else {
+        cb(new Error("Not allowed by CORS"));
+      }
+    }
+  })
+);
 app.use(express.json({ limit: "20mb" }));
 
 app.get("/api", (req, res) => {
