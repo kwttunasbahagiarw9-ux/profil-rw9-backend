@@ -1,0 +1,3 @@
+◇ injected env (5) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+Terhubung ke MongoDB
+Server API RW 09 Tanjung Mas berjalan di http://localhost:5000

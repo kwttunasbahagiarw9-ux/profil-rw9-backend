@@ -1,0 +1,23 @@
+{
+  "name": "rw09-tanjung-mas-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Express.js API server untuk website profil RW 09 Tanjung Mas",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "node index.js",
+    "start": "node index.js",
+    "seed": "node seed.js",
+    "seed:reset": "node seed-reset.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.9.3",
+    "multer": "^2.2.0"
+  }
+}
