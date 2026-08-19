@@ -30,6 +30,29 @@ app.use(
 );
 app.use(express.json({ limit: "20mb" }));
 
+let dbReady = null;
+async function initDB() {
+  if (!dbReady) {
+    dbReady = connectDB()
+      .then(() => ensureAdmin())
+      .catch((err) => {
+        console.error("Gagal inisialisasi database:", err.message);
+        dbReady = null;
+        throw err;
+      });
+  }
+  return dbReady;
+}
+
+app.use(async (req, res, next) => {
+  try {
+    await initDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ error: "Database tidak terhubung", detail: err.message });
+  }
+});
+
 app.get("/api", (req, res) => {
   res.json({
     message: "Selamat datang di API website profil RW 09 Tanjung Mas",
@@ -63,16 +86,15 @@ if (fs.existsSync(clientDist)) {
   });
 }
 
-async function start() {
-  await connectDB();
-  await ensureAdmin();
-
-  app.listen(PORT, () => {
-    console.log(`Server API RW 09 Tanjung Mas berjalan di http://localhost:${PORT}`);
-    if (!fs.existsSync(clientDist)) {
-      console.log("Mode API saja. Jalankan 'npm run build' untuk mengaktifkan antarmuka web.");
-    }
-  });
+if (require.main === module) {
+  initDB().then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server API RW 09 Tanjung Mas berjalan di http://localhost:${PORT}`);
+      if (!fs.existsSync(clientDist)) {
+        console.log("Mode API saja. Jalankan 'npm run build' untuk mengaktifkan antarmuka web.");
+      }
+    });
+  }).catch(() => process.exit(1));
 }
 
-start();
+module.exports = app;
